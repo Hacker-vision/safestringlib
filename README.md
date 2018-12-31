@@ -1,9 +1,9 @@
 Intel safestringlib
 ==========================
 
-## 1.fixup strtok_s and strcmp_s bugs
+#### 1.fixup strtok_s and strcmp_s bugs
 
-## 2.Makefile supports the generations of libsafestring.so
+#### 2.Makefile supports the generations of libsafestring.so
 
 gcc:
 
