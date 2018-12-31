@@ -122,19 +122,18 @@ strcmp_s (const char *dest, rsize_t dmax,
                    NULL, ESLEMAX);
         return RCNEGATE(ESLEMAX);
     }
-
-    while (*dest && *src && dmax) {
-
-        if (*dest != *src) {
+    unsigned char c1 = '\0';
+    unsigned char c2 = '\0';
+    while (dmax > 0) {
+	c1 = (unsigned char)*dest++;
+	c2 = (unsigned char)*src++;
+        if (c1 == '\0' || c1 != c2) {
             break;
         }
-
-        dest++;
-        src++;
         dmax--;
     }
-
-    *indicator = *dest - *src;
+    
+    *indicator = c1 - c2;
     return RCNEGATE(EOK);
 }
 EXPORT_SYMBOL(strcmp_s)

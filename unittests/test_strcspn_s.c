@@ -21,7 +21,7 @@ int test_strcspn_s (void)
     int std_count;
     unsigned int testno = 0;
 
-
+printf("\nTesting strcspn:\n");
 
 /*--------------------------------------------------*/
 /* 1  Test for NULL destination check                  */

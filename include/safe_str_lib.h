@@ -41,7 +41,8 @@
 #define RSIZE_MIN_STR      ( 1 )
 
 /* maximum sring length */
-#define RSIZE_MAX_STR      ( 4UL << 10 )      /* 4KB */
+//#define RSIZE_MAX_STR      ( 4UL << 10 )      /* 4KB */
+#define RSIZE_MAX_STR      ( 4UL << 13 )      /* 32KB */
 
 
 /* The makeup of a password */

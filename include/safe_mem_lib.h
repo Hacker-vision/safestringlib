@@ -36,7 +36,8 @@
 #include "safe_lib.h"
 #include <wchar.h>
 
-#define RSIZE_MAX_MEM      ( 256UL << 20 )     /* 256MB */
+//#define RSIZE_MAX_MEM      ( 256UL << 20 )     /* 256MB */
+#define RSIZE_MAX_MEM      ( 512UL << 20 )     /* 512MB for SPEC*/
 #define RSIZE_MAX_MEM16    ( RSIZE_MAX_MEM/2 )
 #define RSIZE_MAX_MEM32    ( RSIZE_MAX_MEM/4 )
 

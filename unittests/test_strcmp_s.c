@@ -19,7 +19,7 @@ int test_strcmp_s (void)
     errno_t rc;
     int ind;
     int std_ind;
-
+    puts("============test strcmp_s============");
 /*--------------------------------------------------*/
 
     rc = strcmp_s(NULL, LEN, str2, &ind);
@@ -234,7 +234,19 @@ int test_strcmp_s (void)
 
 /*--------------------------------------------------*/
 
-    return (0);
+    strcpy (str1, "keep it simple");
+    strcpy (str2, "keep it simplex");
+    int len = 14;
+    rc = strcmp_s(str1, len, str2, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Error rc=%d \n",
+                     __FUNCTION__, __LINE__, rc);
+    }
+    /* be sure the results are the same as strcmp */
+    std_ind = strncmp(str1, str2,len);
+    if (ind != std_ind) {
+        printf("%s %u  ind=%d  std_ind=%d  rc=%d \n",
+                     __FUNCTION__, __LINE__,  ind, std_ind, rc);
+    }	
+    return 0;
 }
-
-

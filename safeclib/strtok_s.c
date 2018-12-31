@@ -178,52 +178,62 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
  */
 #define  STRTOK_DELIM_MAX_LEN   ( 16 )
 
-
+//printf("start\n");
+    //printf("dest = %s\n",dest);
+    //printf("dest = %p\n",dest);
+    //printf("%d\n",*dmax);
     const char *pt;
     char *ptoken;
     rsize_t dlen;
     rsize_t slen;
-
+// printf("--------------\n");
     if (dmax == NULL) {
         invoke_safe_str_constraint_handler("strtok_s: dmax is NULL",
                    NULL, ESNULLP);
-        return (NULL);
+           //     printf("1\n");
+	    return (NULL);
     }
 
     if (*dmax == 0) {
         invoke_safe_str_constraint_handler("strtok_s: dmax is 0",
                    NULL, ESZEROL);
-        return (NULL);
+        // printf("2\n");
+	    return (NULL);
     }
 
     if (*dmax > RSIZE_MAX_STR) {
         invoke_safe_str_constraint_handler("strtok_s: dmax exceeds max",
                    NULL, ESLEMAX);
+         //printf("3\n");
         return (NULL);
     }
 
     if (src == NULL) {
         invoke_safe_str_constraint_handler("strtok_s: src is null",
                    NULL, ESNULLP);
+         //printf("4\n");
         return (NULL);
     }
 
     if (ptr == NULL) {
         invoke_safe_str_constraint_handler("strtok_s: ptr is null",
                    NULL, ESNULLP);
+        //printf("5\n");
         return (NULL);
     }
 
     /* if the source was NULL, use the tokenizer context */
     if (dest == NULL) {
         dest = *ptr;
+	
+	 
     }
-
     /*
      * scan dest for a delimiter
      */
     dlen = *dmax;
     ptoken = NULL;
+    //printf("--------------\n");
     while (*dest != '\0' && !ptoken) {
 
         if (dlen == 0) {
@@ -231,7 +241,8 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
             invoke_safe_str_constraint_handler(
                       "strtok_s: dest is unterminated",
                        NULL, ESUNTERM);
-            return (NULL);
+                        //printf("--------------\n");
+         	   return (NULL);
         }
 
         /*
@@ -247,6 +258,7 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
                 invoke_safe_str_constraint_handler(
                           "strtok_s: src is unterminated",
                            NULL, ESUNTERM);
+                 //printf("--------------\n");
                 return (NULL);
             }
             slen--;
@@ -269,6 +281,7 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
      */
     if (ptoken == NULL) {
         *dmax = dlen;
+
         return (ptoken);
     }
 
@@ -282,6 +295,7 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
             invoke_safe_str_constraint_handler(
                       "strtok_s: dest is unterminated",
                        NULL, ESUNTERM);
+             //printf("--------------\n");
             return (NULL);
         }
 
@@ -294,7 +308,9 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
                 invoke_safe_str_constraint_handler(
                           "strtok_s: src is unterminated",
                            NULL, ESUNTERM);
+                            //printf("--------------\n");
                 return (NULL);
+		///return 410;
             }
             slen--;
 
@@ -303,10 +319,21 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
                  * found a delimiter, set to null
                  * and return context ptr to next char
                  */
+               // printf("haha");
+                //printf("dest = %s\n",dest);
+                //printf("dest = %p\n",dest);
                 *dest = '\0';
                 *ptr = (dest + 1);  /* return pointer for next scan */
                 *dmax = dlen - 1;   /* account for the nulled delimiter */
-                return (ptoken);
+                //printf("dest = %s\n",dest+1);
+                //printf("dest = %p\n",dest+1);
+                //printf("ptoken = %s\n",ptoken);
+               // printf("ptoken = %p\n",ptoken);
+                
+                //printf("ptr = %s\n",*ptr);
+                //printf("ptr = %p\n",*ptr);
+                return (ptoken);	
+		//return 411;
             } else {
                 /*
                  * simply scanning through the delimiter string
@@ -319,6 +346,8 @@ strtok_s(char *dest, rsize_t *dmax, const char *src, char **ptr)
     }
 
     *dmax = dlen;
+    *ptr = dest;//my advice
+ //printf("--------------\n");
     return (ptoken);
 }
 EXPORT_SYMBOL(strtok_s)
