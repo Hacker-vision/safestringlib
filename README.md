@@ -7,7 +7,9 @@ Intel safestringlib
 
 gcc:
 
+    export LD_LIBRARY_PATH=/ome/sunkang/devel/safestingrlinglib/
     gcc -o test_raw test_raw.c -L /home/sunkang/devel/safestringlib/ -lsafestring
+    ./test_raw
 
 spec 2006:
       
