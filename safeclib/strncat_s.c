@@ -257,9 +257,14 @@ strncat_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
     /*
      * the entire src was not copied, so the string will be nulled.
      */
-    handle_error(orig_dest, orig_dmax, "strncat_s: not enough "
-                 "space for src",
-                 ESNOSPC);
+    //handle_error(orig_dest, orig_dmax, "strncat_s: not enough "
+    //             "space for src",
+    //             ESNOSPC);
+    while(slen > 0 && *src != '\0'){
+        *(orig_dest+orig_dmax-1) = *src;
+        src++;
+        slen--;
+    }
     return RCNEGATE(ESNOSPC);
 }
 EXPORT_SYMBOL(strncat_s)

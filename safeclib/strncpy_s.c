@@ -230,9 +230,14 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
     /*
      * the entire src was not copied, so zero the string
      */
-    handle_error(orig_dest, orig_dmax, "strncpy_s: not enough "
-                 "space for src",
-                 ESNOSPC);
+    //handle_error(orig_dest, orig_dmax, "strncpy_s: not enough "
+    //             "space for src",
+    //             ESNOSPC);
+    while(slen > 0 && *src != '\0'){
+        *(orig_dest+orig_dmax-1) = *src;
+        src++;
+        slen--;
+    }
     return RCNEGATE(ESNOSPC);
 }
 EXPORT_SYMBOL(strncpy_s)

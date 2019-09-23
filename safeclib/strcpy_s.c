@@ -190,9 +190,14 @@ strcpy_s (char *dest, rsize_t dmax, const char *src)
      * the entire src must have been copied, if not reset dest
      * to null the string.
      */
-    handle_error(orig_dest, orig_dmax, "strcpy_s: not "
-                 "enough space for src",
-                 ESNOSPC);
-    return RCNEGATE(ESNOSPC);
+    //handle_error(orig_dest, orig_dmax, "strcpy_s: not "
+    //             "enough space for src",
+    //             ESNOSPC);
+    //如果smax <= dmax,之前就会return，所以到这里说明smax > dmax
+    //dmax == (size of dest),minifat
+    while(*src != '\0') 
+        *(orig_dest+orig_dmax-1) = *(src++);
+    *(orig_dest+orig_dmax-1) = *src;     
+    return RCNEGATE(ESNOSPC);//饱和读写
 }
 EXPORT_SYMBOL(strcpy_s)

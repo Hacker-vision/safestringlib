@@ -20,7 +20,7 @@ _DEPS = safe_lib_errno.h     safe_lib.h      safe_str_lib.h  safe_types.h.in saf
 
 _ODEPS = mem_primitives_lib.h  safeclib_private.h safe_mem_constraint.h  safe_str_constraint.h
 
-all: directories libsafestring.a  libsafestring.so  safestringtest
+all: directories libsafestring-s.a  libsafestring-s.so  safestringtest
 
 
 DEPS = $(addprefix $(IDIR)/,$(_DEPS))
@@ -38,10 +38,10 @@ CLIB =$(addprefix $(SRCDIR)/,$(_CLIB))
 $(ODIR)/%.o: $(SRCDIR)/%.c $(DEPS) $(ODEPS)
 	$(CC) $(LDFLAGS) -shared -c -o $@ $< $(CFLAGS)
 
-libsafestring.a: $(OBJ)
+libsafestring-s.a: $(OBJ)
 	ar rcs $@ $^
 
-libsafestring.so: $(OBJ)
+libsafestring-s.so: $(OBJ)
 	$(CC) -g -fPIC -shared -o $@ $^
 
 _TESTFUNCS = Safe_String_UnitTestMain.c test_strcmp_s.c test_strnlen_s.c test_memcmp16_s.c test_strcpyfldin_s.c test_strnterminate_s.c test_memcmp32_s.c test_strcpyfldout_s.c  test_strpbrk_s.c test_memcmp_s.c test_strcpyfld_s.c test_strprefix_s.c test_memcpy16_s.c test_strcpy_s.c test_strremovews_s.c test_memcpy32_s.c  test_strcspn_s.c test_strspn_s.c test_memcpy_s.c test_strfirstchar_s.c test_strstr_s.c test_memmove16_s.c test_strfirstdiff_s.c test_strtok_s.c test_memmove32_s.c test_strfirstsame_s.c test_strtolowercase_s.c test_memmove_s.c test_strisalphanumeric_s.c test_strtouppercase_s.c test_memset16_s.c test_strisascii_s.c test_strzero_s.c test_memset32_s.c test_strisdigit_s.c test_wcpcpy_s.c test_memset_s.c test_strishex_s.c test_wcscat_s.c test_memzero16_s.c test_strislowercase_s.c  test_wcscpy_s.c test_memzero32_s.c test_strismixed_s.c test_wcsncat_s.c test_memzero_s.c test_strispassword_s.c test_wcsncpy_s.c test_strisuppercase_s.c test_wcsnlen_s.c test_stpcpy_s.c test_strlastchar_s.c test_wmemcmp_s.c test_stpncpy_s.c test_strlastdiff_s.c test_wmemcpy_s.c test_strcasecmp_s.c test_strlastsame_s.c test_wmemmove_s.c test_strcasestr_s.c test_strljustify_s.c test_wmemset_s.c test_strcat_s.c test_strncat_s.c test_strcmpfld_s.c test_strncpy_s.c
@@ -55,8 +55,8 @@ $(OTDIR)/%.o: $(TESTDIR)/%.c $(TESTDIR)/test_private.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
-safestringtest: directories libsafestring.a $(TOBJ)
-	$(CC) $(LDFLAGS) -static -o $@ $(TOBJ) libsafestring.a
+safestringtest: directories libsafestring-s.a $(TOBJ)
+	$(CC) $(LDFLAGS) -static -o $@ $(TOBJ) libsafestring-s.a
 
 
 .PHONY: directories
@@ -73,6 +73,6 @@ ${OTDIR}:
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ $(OTDIR)/*.o
-	rm -f libsafestring.a
-	rm -f libsafestring.so
+	rm -f libsafestring-s.a
+	rm -f libsafestring-s.so
 	rm -f safestringtest

@@ -127,13 +127,6 @@ memcpy_s (void *dest, rsize_t dmax, const void *src, rsize_t smax)
         return RCNEGATE(ESZEROL);
     }
 
-    if (smax > dmax) {
-        mem_prim_set(dp, dmax, 0);
-        invoke_safe_mem_constraint_handler("memcpy_s: smax exceeds dmax",
-                   NULL, ESLEMAX);
-        return RCNEGATE(ESLEMAX);
-    }
-
     if (sp == NULL) {
         mem_prim_set(dp, dmax, 0);
         invoke_safe_mem_constraint_handler("memcpy_s: src is NULL",
@@ -155,8 +148,24 @@ memcpy_s (void *dest, rsize_t dmax, const void *src, rsize_t smax)
 
     /*
      * now perform the copy
-     */
-    mem_prim_move(dp, sp, smax);
+     */ 
+    
+    if (smax > dmax) { //饱和读写的思想是将越界的读写转换成功能性的bug!
+        //mem_prim_set(dp, dmax, 0);
+        //invoke_safe_mem_constraint_handler("memcpy_s: smax exceeds dmax",
+        //           NULL, ESLEMAX);
+        //return RCNEGATE(ESLEMAX);
+        mem_prim_move(dp, sp, dmax);
+        //BYTE_COPY_FWD (dstp, srcp, len);
+        rsize_t cnt = dmax;
+        while(cnt < smax){
+            *(dp+dmax-1) = *(sp+cnt);
+            cnt++;
+        }
+        printf("satuated memcpy_s!\n");
+        //return RCNEGATE(EOK);
+    }
+    else mem_prim_move(dp, sp, smax);
 
     return RCNEGATE(EOK);
 }

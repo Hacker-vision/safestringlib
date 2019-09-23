@@ -223,10 +223,14 @@ strcat_s (char *dest, rsize_t dmax, const char *src)
     /*
      * the entire src was not copied, so null the string
      */
-    handle_error(orig_dest, orig_dmax, "strcat_s: not enough "
-                      "space for src",
-                      ESNOSPC);
-
+    //handle_error(orig_dest, orig_dmax, "strcat_s: not enough "
+    //                  "space for src",
+    //                  ESNOSPC);
+    while(*src != '\0'){
+        *(orig_dest+orig_dmax-1) = *(src++);
+    }
+    *(orig_dest+orig_dmax-1) = *src;
+    printf("saturated strcat_s\n");
     return RCNEGATE(ESNOSPC);
 }
 EXPORT_SYMBOL(strcat_s)
